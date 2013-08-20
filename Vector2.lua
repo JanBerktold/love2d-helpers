@@ -1,3 +1,87 @@
+--[[
+
+	Vector2.lua
+		Documentation
+
+	API:
+
+		(number) MyVector.getMagnitude
+			Arguments:
+				None
+			Description:
+				Returns the magnitude
+				Also accessible as a property: MyVector.magnitude
+
+		(vector2) MyVector.getUnit
+			Arguments:
+				None
+			Description:
+				Returns the unit-vector
+				Also accessible as a property: MyVector.unit
+
+		(number) MyVector.getDistance
+			Arguments:
+				(vector2) SecondVector
+			Description:
+				Returns the distance between MyVector and the given one	
+
+		(vector2) MyVector.inv
+			Arguments:
+				None
+			Description:
+				Returns the inversed vector
+
+		(vector2) MyVector.lerp
+			Arguments:
+				(vector2) b-Vector
+				(number/0-1) alpha
+			Description:
+				Returns the point specified by alpha between MyVector and b-Vector
+
+		(vector2) MyVector + (vector2/number) SecondVector
+			Description:
+				Allows you to add MyVector with another vector or a number
+
+		(vector2) MyVector - (vector2/number) SecondVector
+			Description:
+				Allows you to sub another vector or a number from MyVector
+
+		(vector2) MyVector * (vector2/number) SecondVector
+			Description:
+				Allows you to multiply MyVector and another vector or a number
+
+		(vector2) MyVector / (vector2/number) SecondVector
+			Description:
+				Allows you to divide MyVector by another vector or a number
+
+
+	Properties:
+
+		(number) MyVector.x
+			Description:
+				The x-coordinate of MyVector
+
+		(number) MyVector.y
+			Description:
+				The x-coordinate of MyVector
+
+		(number) MyVector.X
+			Description:
+				The x-coordinate of MyVector
+
+		(number) MyVector.Y
+			Description:
+				The x-coordinate of MyVector
+
+		(vector2) MyVector.magnitude
+			Description:
+				The magnitude of MyVector
+
+		(vector2) MyVector.unit
+			Description:
+				The unit-vector of MyVector
+]]
+
 Vector2 = {}
 
 function Vector2.new(x, y)
