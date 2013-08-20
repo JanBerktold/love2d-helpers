@@ -38,6 +38,10 @@
 			Description:
 				Returns the point specified by alpha between MyVector and b-Vector
 
+		(number) (number) MyVector.unpack
+			Description:
+				Unpacks the vector and returns the two coordinates
+
 		(vector2) MyVector + (vector2/number) SecondVector
 			Description:
 				Allows you to add MyVector with another vector or a number
@@ -53,7 +57,6 @@
 		(vector2) MyVector / (vector2/number) SecondVector
 			Description:
 				Allows you to divide MyVector by another vector or a number
-
 
 	Properties:
 
@@ -84,48 +87,25 @@
 
 Vector2 = {}
 
-function Vector2.new(x, y)
-	local this = {}
+-- just incase someone wants to have the magnitude 'n stuff as a property
+local look_up = {
+	magnitude = 'getMagnitude',
+	unit = 'getUnit'
+}
 
-	this.x = x or 0
-	this.y = y or 0
+-- performance
+local sqrt = math.sqrt
+local assert = assert
+local getmetatable = getmetatable
+local setmetatable = setmetatable
 
-	function this.getMagnitude()
-		return math.sqrt(this.x ^ 2 + this.y ^ 2)
-	end
-
-	function this.getUnit()
-		local magnitude = this.getMagnitude()
-		return this / magnitude
-	end
-
-	function this.getDistance(secondVector)
-		return (this - secondVector).getMagnitude()
-	end
-
-	function this.inv()
-		return Vector2.new(this.x * -1, this.y * -1)
-	end
-
-	function this.lerp(secondVector, alpha)
-		local alpha = type(alpha) == 'number' and alpha or 0
-		return Vector2.new((secondVector.x - this.x) * alpha + this.x, (secondVector.y - this.y) * alpha + this.x)
-	end
-
-	-- just incase someone wants to have the magnitude 'n stuff as a property
-	local look_up = {
-		magnitude = this.getMagnitude,
-		unit = this.getUnit
-	}
-
-	setmetatable(this, 
-		{
+local vectorTable = {
 
 			__metatable = 'Vector2.metatable',
 
 			__index = function(this, index)
 				-- so we can do .Y and .y, without having to use two variables
-				return look_up[index] and look_up[index]() or this[index:upper()] or this[index:lower()]
+				return look_up[index] and this[look_up[index]]() or this[index:upper()] or this[index:lower()]
 			end,
 
 			__add = function(this, secondVector)
@@ -176,10 +156,41 @@ function Vector2.new(x, y)
 				return ('Vector2 %f, %f'):format(this.x, this.y)
 			end
 
-		}
-	)
+}
 
-	return this
+function Vector2.new(x, y)
+	local this = {}
+
+	this.x = x or 0
+	this.y = y or 0
+
+	function this.unpack()
+		return this.x this.y
+	end
+
+	function this.getMagnitude()
+		return sqrt(this.x ^ 2 + this.y ^ 2)
+	end
+
+	function this.getUnit()
+		local magnitude = this.getMagnitude()
+		return this / magnitude
+	end
+
+	function this.getDistance(secondVector)
+		return (this - secondVector).getMagnitude()
+	end
+
+	function this.inv()
+		return Vector2.new(this.x * -1, this.y * -1)
+	end
+
+	function this.lerp(secondVector, alpha)
+		local alpha = type(alpha) == 'number' and alpha or 0
+		return Vector2.new((secondVector.x - this.x) * alpha + this.x, (secondVector.y - this.y) * alpha + this.x)
+	end
+
+	return setmetatable(this, vectorTable)
 end
 
 function Vector2.One()
