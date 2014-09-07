@@ -1,10 +1,4 @@
-love2d-classes
+love2d-helpers
 ==============
 
-I merely use this repository to display (well, more show-off ;p) my love2d classes.
-
-Feel free to contact me, if you have any questions or wish to use them somewhere:
-
-Skype: janywer
-E-mail: jangieseler@aol.com
-Twitter: @janyer
+Repository is used to publish some of my love2d helpers, which might be useful for other developers.
